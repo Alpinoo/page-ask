@@ -4,7 +4,7 @@
 ![Manifest V3](https://img.shields.io/badge/Manifest-V3-blue)
 ![Version](https://img.shields.io/badge/version-1.2.2-green)
 
-**English** · [Türkçe](README.tr.md)
+**[English](README.md)** · **[Türkçe](README.tr.md)**
 
 > Ask Gemini about the page you're on — a Vivaldi/Chromium extension.
 
@@ -27,7 +27,7 @@ It was built because Vivaldi has no built-in "ask AI about this page" feature, a
 - Turkish and English UI (defaults to the browser language).
 - On pages where extensions can't run (`vivaldi://`, `chrome://`, store pages, the PDF viewer) a small notice pops up under the toolbar icon for 2 seconds. No extra window is opened.
 
-![Chat panel](docs/images/panel.png)
+![Chat panel](docs/images/02-answer-en.png)
 
 ## Installation
 
@@ -38,46 +38,48 @@ You need Vivaldi (or Chrome/another Chromium browser, version 111+) and a free G
 Download the repository as a ZIP (**Code → Download ZIP**) and extract it somewhere permanent, or clone it:
 
 ```bash
-git clone https://github.com/<your-username>/page-ask.git
+git clone https://github.com/GITHUB_USER/page-ask.git
 ```
 
 Don't move or delete the folder afterwards, or the extension will disappear.
 
-![Download the repository](docs/images/01-download.png)
-
 ### 2. Turn on Developer mode
 
-Open `vivaldi://extensions` and switch on **Developer mode** (top right).
+Open `vivaldi://extensions` and switch on **Developer mode** (top right). The **Load unpacked** button is available once it's on.
 
-![Developer mode](docs/images/02-developer-mode.png)
+![Developer mode](docs/images/install-1-developer-mode.png)
 
 ### 3. Load the extension
 
 Click **Load unpacked** and select the `page-ask` folder (the one that contains `manifest.json`).
 
-![Load unpacked](docs/images/03-load-unpacked.png)
+![Load unpacked](docs/images/install-2-load-unpacked.png)
+
+Page Ask now shows up in your extensions list:
+
+![Page Ask in the extensions list](docs/images/install-3-extension-loaded.png)
 
 ### 4. Get a Gemini API key
 
-Create a key at <https://aistudio.google.com/apikey>.
+Create a free key at <https://aistudio.google.com/apikey> (**Create API key**). Keep it private and never commit it anywhere.
 
-![Create an API key in Google AI Studio](docs/images/04-get-api-key.png)
+![Google AI Studio API keys page](docs/images/install-4-ai-studio-key.png)
 
 ### 5. Paste the key into the settings
 
 Right-click the extension icon → **Options** (or use the settings button in the panel), paste the key and press **Save**.
 
-![Paste the API key](docs/images/05-paste-key.png)
+![Settings page](docs/images/05-settings-en.png)
 
 ### 6. Pin it to the toolbar
 
-Click the puzzle icon in the toolbar and pin **Page Ask**.
-
-![Pin to toolbar](docs/images/06-pin-toolbar.png)
+Open the extensions menu (puzzle icon) in the toolbar and pin **Page Ask**, so its icon is always one click away.
 
 ### 7. Try it
 
-Open any web page and press **Alt+G**.
+Open any web page and press **Alt+G** (or click the icon).
+
+![Page Ask in Vivaldi (shown with the Turkish UI; the panel follows your language setting)](docs/images/install-5-first-run.png)
 
 ## Usage
 
@@ -87,11 +89,23 @@ Open any web page and press **Alt+G**.
 - The **new chat** button starts over and re-reads the page, e.g. after the page changed.
 - On unsupported pages you'll see this notice:
 
-![Unsupported page notice](docs/images/notice-popup.png)
+![Unsupported page notice](docs/images/08-restricted-page-notice-en.png)
+
+## More screenshots
+
+| Selected text | Selected text + answer |
+| --- | --- |
+| ![Selected text](docs/images/03-selected-text-en.png) | ![Answer to a question about the selection](docs/images/03b-selected-text-answer-en.png) |
+
+| Dark theme | Language dropdown | Model list |
+| --- | --- | --- |
+| ![Dark theme](docs/images/04-dark-theme-en.png) | ![Language dropdown](docs/images/06-language-dropdown-en.png) | ![Model list](docs/images/07-model-list-en.png) |
+
+The panel and settings follow your system's light/dark theme automatically.
 
 ## Settings
 
-![Settings page](docs/images/settings.png)
+![Settings page](docs/images/05-settings-en.png)
 
 | Setting | Description |
 | --- | --- |

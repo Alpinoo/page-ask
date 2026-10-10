@@ -4,7 +4,7 @@
 ![Manifest V3](https://img.shields.io/badge/Manifest-V3-blue)
 ![Version](https://img.shields.io/badge/version-1.2.2-green)
 
-[English](README.md) · **Türkçe**
+**[English](README.md)** · **[Türkçe](README.tr.md)**
 
 > Bulunduğun sayfa hakkında Gemini'ye sor — Vivaldi/Chromium eklentisi.
 
@@ -27,7 +27,7 @@ Vivaldi'de "bu sayfayı yapay zekaya sor" özelliği olmadığı için ve ücret
 - Türkçe/İngilizce arayüz (varsayılan tarayıcı dili).
 - Eklentilerin çalışamadığı sayfalarda (`vivaldi://`, `chrome://`, mağaza sayfaları, PDF görüntüleyici) araç çubuğu simgesinin altında 2 saniyelik küçük bir uyarı çıkar. Ayrı pencere açılmaz.
 
-![Sohbet paneli](docs/images/panel.png)
+![Sohbet paneli](docs/images/02-answer-tr.png)
 
 ## Kurulum
 
@@ -38,46 +38,48 @@ Vivaldi (ya da Chrome/başka bir Chromium tarayıcı, sürüm 111+) ve ücretsiz
 Repoyu ZIP olarak indirip (**Code → Download ZIP**) kalıcı bir yere çıkar ya da klonla:
 
 ```bash
-git clone https://github.com/<kullanici-adin>/page-ask.git
+git clone https://github.com/GITHUB_USER/page-ask.git
 ```
 
 Klasörü sonradan taşırsan ya da silersen eklenti kaybolur.
 
-![Repoyu indir](docs/images/01-download.png)
-
 ### 2. Geliştirici modunu aç
 
-`vivaldi://extensions` adresini aç ve sağ üstten **Geliştirici modu**nu aç.
+`vivaldi://extensions` adresini aç ve sağ üstten **Geliştirici modu**nu aç. Açınca **Load unpacked** (Paketlenmemiş öğe yükle) düğmesi kullanılabilir olur.
 
-![Geliştirici modu](docs/images/02-developer-mode.png)
+![Geliştirici modu](docs/images/install-1-developer-mode.png)
 
 ### 3. Eklentiyi yükle
 
-**Paketlenmemiş öğe yükle**'ye tıkla ve `page-ask` klasörünü (içinde `manifest.json` olan klasör) seç.
+**Load unpacked**'a tıkla ve `page-ask` klasörünü (içinde `manifest.json` olan klasör) seç.
 
-![Paketlenmemiş öğe yükle](docs/images/03-load-unpacked.png)
+![Paketlenmemiş öğe yükle](docs/images/install-2-load-unpacked.png)
+
+Page Ask artık eklenti listende görünür:
+
+![Eklenti listesinde Page Ask](docs/images/install-3-extension-loaded.png)
 
 ### 4. Gemini API anahtarı al
 
-<https://aistudio.google.com/apikey> adresinden bir anahtar oluştur.
+<https://aistudio.google.com/apikey> adresinden ücretsiz bir anahtar oluştur (**Create API key**). Anahtarı gizli tut, hiçbir yere commit'leme.
 
-![Google AI Studio'da API anahtarı oluştur](docs/images/04-get-api-key.png)
+![Google AI Studio API anahtarları sayfası](docs/images/install-4-ai-studio-key.png)
 
 ### 5. Anahtarı ayarlara yapıştır
 
 Eklenti simgesine sağ tık → **Seçenekler** (ya da paneldeki ayarlar düğmesi), anahtarı yapıştır ve **Kaydet**'e bas.
 
-![API anahtarını yapıştır](docs/images/05-paste-key.png)
+![Ayarlar sayfası](docs/images/05-settings-tr.png)
 
 ### 6. Araç çubuğuna sabitle
 
-Araç çubuğundaki puzzle simgesine tıkla ve **Page Ask**'ı sabitle.
-
-![Araç çubuğuna sabitle](docs/images/06-pin-toolbar.png)
+Araç çubuğundaki eklenti menüsünü (puzzle simgesi) aç ve **Page Ask**'ı sabitle; simgesi hep tek tık uzağında olur.
 
 ### 7. Dene
 
-Herhangi bir web sayfasında **Alt+G**'ye bas.
+Herhangi bir web sayfasında **Alt+G**'ye bas (ya da simgeye tıkla).
+
+![Vivaldi'de Page Ask](docs/images/install-5-first-run.png)
 
 ## Kullanım
 
@@ -87,11 +89,23 @@ Herhangi bir web sayfasında **Alt+G**'ye bas.
 - **Yeni sohbet** düğmesi baştan başlatır ve sayfayı yeniden okur (ör. sayfa değiştiyse).
 - Desteklenmeyen sayfalarda şu uyarı çıkar:
 
-![Desteklenmeyen sayfa uyarısı](docs/images/notice-popup.png)
+![Desteklenmeyen sayfa uyarısı](docs/images/08-restricted-page-notice-tr.png)
+
+## Diğer ekran görüntüleri
+
+| Seçili metin | Seçili metin + cevap |
+| --- | --- |
+| ![Seçili metin](docs/images/03-selected-text-tr.png) | ![Seçime sorulan sorunun cevabı](docs/images/03b-selected-text-answer-tr.png) |
+
+| Koyu tema | Dil listesi | Model listesi |
+| --- | --- | --- |
+| ![Koyu tema](docs/images/04-dark-theme-tr.png) | ![Dil listesi](docs/images/06-language-dropdown-tr.png) | ![Model listesi](docs/images/07-model-list-tr.png) |
+
+Panel ve ayarlar sayfası sistemin açık/koyu temasını otomatik takip eder.
 
 ## Ayarlar
 
-![Ayarlar sayfası](docs/images/settings.png)
+![Ayarlar sayfası](docs/images/05-settings-tr.png)
 
 | Ayar | Açıklama |
 | --- | --- |
