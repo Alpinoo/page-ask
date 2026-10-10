@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Page Ask</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+      --bg: #f6f7fb; --card: #fff; --fg: #1a1f2b; --muted: #667085; --line: #e2e6ee;
+      --accent: #4a64f0; --accent2: #8a5cf5; --ok: #0f7b3f; --err: #b3261e;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root { --bg: #14161d; --card: #1b1e27; --fg: #e8eaf1; --muted: #98a1b5; --line: #323849; --accent: #7e92ff; --accent2: #a98bff; --ok: #5fd08a; --err: #ffb4ab; }
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--bg); color: var(--fg); font: 14px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    body.loading { visibility: hidden; }
+    main { max-width: 640px; margin: 0 auto; padding: 32px 20px 64px; }
+    .top { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; margin-bottom: 20px; }
+    h1 { font-size: 22px; margin: 0 0 4px; }
+    .sub { color: var(--muted); margin: 0; }
+    .lang { display: flex; align-items: center; gap: 8px; flex: none; }
+    .lang label { color: var(--muted); font-size: 13px; }
+    .dd { position: relative; }
+    .dd-btn { display: flex; align-items: center; justify-content: space-between; gap: 14px; min-width: 150px; padding: 7px 12px 7px 14px; border-radius: 10px; }
+    .dd-btn .chev { flex: none; color: var(--muted); transition: transform .18s ease; margin-right: 2px; }
+    .dd-btn[aria-expanded=true] { border-color: var(--accent); }
+    .dd-btn[aria-expanded=true] .chev { transform: rotate(180deg); }
+    .dd-list { position: absolute; right: 0; top: calc(100% + 6px); min-width: 100%; margin: 0; padding: 4px; list-style: none; z-index: 20;
+      background: var(--card); border: 1px solid var(--line); border-radius: 12px; box-shadow: 0 10px 30px rgba(20,25,50,.18); outline: none;
+      transform-origin: top right; animation: ddIn .14s ease-out; }
+    .dd-list[hidden] { display: none; }
+    @keyframes ddIn { from { opacity: 0; transform: translateY(-4px) scale(.97); } to { opacity: 1; transform: none; } }
+    .dd-list li { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 8px 10px 8px 12px; border-radius: 8px; cursor: pointer; white-space: nowrap; }
+    .dd-list li.active { background: color-mix(in srgb, var(--accent) 14%, transparent); }
+    .dd-list li[aria-selected=true] { font-weight: 600; }
+    .dd-list li[aria-selected=true]::after { content: ""; width: 12px; height: 12px; flex: none; background: var(--accent);
+      -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M4 10.5l4 4 8-9' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/contain no-repeat;
+              mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M4 10.5l4 4 8-9' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/contain no-repeat; }
+    .grp { margin: 12px 0 6px; font-size: 11.5px; font-weight: 700; letter-spacing: .02em; color: var(--muted); }
+    .grp:first-child { margin-top: 0; }
+    .card { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 18px 18px 6px; margin-bottom: 16px; }
+    .card h2 { font-size: 15px; margin: 0 0 12px; }
+    .field { margin-bottom: 16px; }
+    label.l { display: block; font-weight: 600; margin-bottom: 4px; }
+    .hint { color: var(--muted); font-size: 12.5px; margin: 4px 0 0; }
+    input[type=text], input[type=password], input[type=number] {
+      width: 100%; padding: 9px 12px; border: 1px solid var(--line); border-radius: 10px; background: var(--bg); color: var(--fg); font: inherit;
+    }
+    input:focus-visible, button:focus-visible, .dd-list:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+    .row { display: flex; gap: 8px; }
+    .row > input { flex: 1; }
+    button {
+      border: 1px solid var(--line); background: var(--card); color: var(--fg); padding: 8px 14px; border-radius: 10px; font: inherit; cursor: pointer;
+    }
+    button:hover { border-color: var(--accent); }
+    button.primary { border: 0; color: #fff; background: linear-gradient(135deg, var(--accent), var(--accent2)); }
+    .check { display: flex; gap: 10px; align-items: flex-start; }
+    .check input { margin-top: 4px; }
+    .status { min-height: 20px; margin: 0; font-size: 13px; }
+    .status.ok { color: var(--ok); } .status.err { color: var(--err); }
+    #models { margin-top: 10px; }
+    #models button { display: block; width: 100%; text-align: left; margin-bottom: 6px; }
+    #models button:hover, #models button.picked { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 12%, var(--card)); }
+    #models button.picked { font-weight: 600; box-shadow: inset 0 0 0 1px var(--accent); }
+    #models small { color: var(--muted); }
+    code { background: var(--bg); padding: 1px 6px; border-radius: 6px; border: 1px solid var(--line); }
+    a { color: var(--accent); }
+  </style>
+</head>
+<body class="loading">
+<main>
+  <div class="top">
+    <div>
+      <h1 data-i18n="appName"></h1>
+      <p class="sub" data-i18n="optSub"></p>
+    </div>
+    <div class="lang">
+      <label id="langLabel" data-i18n="language"></label>
+      <div class="dd" id="langDd">
+        <button id="langBtn" class="dd-btn" type="button" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="langLabel langBtn">
+          <span id="langCur">English</span>
+          <svg class="chev" width="14" height="14" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 7.5l5 5 5-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <ul id="langList" class="dd-list" role="listbox" tabindex="-1" aria-labelledby="langLabel" hidden>
+          <li role="option" data-value="tr" id="opt-tr">Türkçe</li>
+          <li role="option" data-value="en" id="opt-en">English</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <section class="card">
+    <h2 data-i18n="secApi"></h2>
+    <div class="field">
+      <label class="l" for="key" data-i18n="keyLabel"></label>
+      <div class="row">
+        <input id="key" type="password" autocomplete="off" spellcheck="false" placeholder="AIza...">
+        <button id="toggleKey" type="button" data-i18n-aria="keyToggleAria"></button>
+      </div>
+      <p class="hint" data-rich="keyHint"></p>
+    </div>
+    <div class="field">
+      <label class="l" for="model" data-i18n="modelLabel"></label>
+      <div class="row">
+        <input id="model" type="text" autocomplete="off" spellcheck="false" placeholder="gemini-3.5-flash-lite">
+        <button id="listModels" type="button" data-i18n="listModels"></button>
+      </div>
+      <p class="hint" data-rich="modelHint"></p>
+      <div id="models"></div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2 data-i18n="secBehavior"></h2>
+    <div class="field">
+      <label class="l" for="maxChars" data-i18n="maxCharsLabel"></label>
+      <input id="maxChars" type="number" min="0" step="100000" placeholder="2000000">
+      <p class="hint" data-rich="maxCharsHint"></p>
+    </div>
+    <div class="field check">
+      <input id="showInfoBar" type="checkbox">
+      <div>
+        <label class="l" for="showInfoBar" style="margin:0" data-i18n="infoBarLabel"></label>
+        <p class="hint" data-i18n="infoBarHint"></p>
+      </div>
+    </div>
+    <div class="field check">
+      <input id="clearOnClose" type="checkbox">
+      <div>
+        <label class="l" for="clearOnClose" style="margin:0" data-i18n="clearOnCloseLabel"></label>
+        <p class="hint" data-i18n="clearOnCloseHint"></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2 data-i18n="secShortcut"></h2>
+    <div class="field">
+      <p style="margin-top:0" data-rich="shortcutText"></p>
+      <div class="row">
+        <input id="shortcutUrl" type="text" readonly value="vivaldi://extensions/shortcuts">
+        <button id="openShortcuts" type="button" data-i18n="open"></button>
+        <button id="copyShortcuts" type="button" data-i18n="copyBtn"></button>
+      </div>
+      <p class="hint" data-i18n="shortcutHint"></p>
+    </div>
+  </section>
+
+  <div class="row" style="align-items:center">
+    <button id="save" class="primary" type="button" data-i18n="save"></button>
+    <p id="status" class="status" role="status"></p>
+  </div>
+</main>
+<script src="i18n.js"></script>
+<script src="options.js"></script>
+</body>
+</html>

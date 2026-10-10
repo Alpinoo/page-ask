@@ -1,0 +1,8 @@
+{
+  "extDescription": {
+    "message": "Açık sayfayla ilgili Gemini'ye soru sor. Araç çubuğu simgesi veya Alt+G ile açılan, sabitlenebilir yüzen panel."
+  },
+  "commandDescription": {
+    "message": "Page Ask panelini aç/kapat"
+  }
+}

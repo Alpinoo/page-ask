@@ -1,0 +1,8 @@
+{
+  "extDescription": {
+    "message": "Ask Gemini about the page you're on. A pinnable floating panel opened with the toolbar icon or Alt+G."
+  },
+  "commandDescription": {
+    "message": "Toggle the Page Ask panel"
+  }
+}

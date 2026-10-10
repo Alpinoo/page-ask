@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Page Ask</title>
+  <style>
+    :root { color-scheme: light dark; --bg: #ffffff; --fg: #1a1f2b; --muted: #667085; --accent: #4a64f0; --accent2: #8a5cf5; --warn: #b45309; --warn-bg: #fef3c7; }
+    @media (prefers-color-scheme: dark) {
+      :root { --bg: #1b1e27; --fg: #e8eaf1; --muted: #98a1b5; --accent: #7e92ff; --accent2: #a98bff; --warn: #fbbf24; --warn-bg: #3a2f12; }
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; background: var(--bg); color: var(--fg); }
+    body { width: 320px; padding: 12px 14px 15px; font: 13px/1.45 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; position: relative; overflow: hidden; }
+    .row { display: flex; gap: 10px; align-items: flex-start; }
+    .ico { flex: none; width: 24px; height: 24px; border-radius: 50%; background: var(--warn-bg); color: var(--warn); display: grid; place-items: center; font-weight: 700; font-size: 14px; }
+    h1 { margin: 0 0 2px; font-size: 13.5px; font-weight: 600; }
+    p { margin: 0; color: var(--muted); font-size: 12px; }
+    .bar { position: absolute; left: 0; right: 0; bottom: 0; height: 3px; }
+    .bar i { display: block; height: 100%; width: 100%; transform-origin: left center; background: linear-gradient(90deg, var(--accent), var(--accent2)); animation: shrink 2s linear forwards; }
+    @keyframes shrink { to { transform: scaleX(0); } }
+    @media (prefers-reduced-motion: reduce) { .bar i { animation-duration: 2s; } }
+  </style>
+</head>
+<body>
+  <div class="row">
+    <div class="ico" aria-hidden="true">!</div>
+    <div role="alert">
+      <h1 id="title"></h1>
+      <p id="text"></p>
+    </div>
+  </div>
+  <div class="bar"><i></i></div>
+  <script src="i18n.js"></script>
+  <script src="notice.js"></script>
+</body>
+</html>
