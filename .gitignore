@@ -1,0 +1,17 @@
+# Dependencies
+node_modules/
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Archives / packaged builds
+*.zip
+*.crx
+*.pem
+
+# Editor / logs
+.vscode/
+.idea/
+*.log
